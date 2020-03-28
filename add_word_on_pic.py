@@ -7,12 +7,18 @@ from PIL import Image
 
 for i in range(len(c)):
     # load picture
-    bk_img = cv2.imread(c[i])
+    img = cv2.imread(c[i])
     
     # add rectangle and word
-    width, height, _ = bk_img.shape
-    cv2.rectangle(bk_img, (height-100, width-50), (height, width), (0, 0, 0), -1)
-    cv2.putText(bk_img,
+    width, height, _ = img.shape
+    
+    cv2.rectangle(img,
+                  (height-100, width-50),
+                  (height, width),
+                  (0, 0, 0),
+                  -1)
+    
+    cv2.putText(img,
                 (str(i).rjust(3,'0')),
                 (height-70, width-20),
                 cv2.FONT_HERSHEY_SIMPLEX,
@@ -20,4 +26,6 @@ for i in range(len(c)):
                 (255,255,255),
                 1,
                 cv2.LINE_AA)
-    cv2.imwrite((str(i).rjust(3,'0'))+".jpg", bk_img)
+    
+    cv2.imwrite((str(i).rjust(3,'0'))+".jpg",
+                img)
