@@ -21,8 +21,8 @@ for i in range(len(c)):
     cv2.putText(img,
                 (str(i).rjust(3,'0')),
                 (height-70, width-20),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7,
+                cv2.FONT_HERSHEY_SCRIPT_COMPLEX,
+                1,
                 (255,255,255),
                 1,
                 cv2.LINE_AA)
