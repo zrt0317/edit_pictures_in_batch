@@ -1,0 +1,52 @@
+from requests_html import HTMLSession
+session = HTMLSession()
+
+for kk in ['02','03','04','05','06','07','08','09']:
+    
+    k = []
+        
+    for a in ['09020','09007','63000','64000','65000','66000','67000','68000',
+              '10002','10004','10005','10007','10008','10009','10010',
+              '10013','10014','10015','10016','10017','10018','10020']:
+        for b in range(39):
+            if b < 10:
+                bb='0'+str(b)
+            else:
+                bb=str(b)
+            
+            url = ('http://referendum.2018.nat.gov.tw/pc/zh_TW/'+kk+'/'
+                   +str(a)+'00'+bb+'00000000.html')
+            
+            r = session.get(url)
+            sel = ('''#divContent > table > tbody > tr:nth-child(4) > td > 
+                    table:nth-child(3) > tbody > tr.trT > td:nth-child(4)''')
+            
+            results = r.html.html
+            resultslist = results.split('''<td class="tdAlignRight">''')
+            selectednum = resultslist[-1][:6]
+            
+            
+            if selectednum == '<html>':
+                break
+            else:
+                selectedstr = resultslist[0].split(
+                        '''公民投票結果&nbsp;-&nbsp;''')[-1][:7]
+                selected = selectednum+selectedstr
+                k+= [selected]
+                print(a,b)
+        
+    
+    f1 = open(kk+'.txt','w')
+    for i in k:    
+        ii=i[6:]
+        iii=ii.split('<')[0]
+        f1.write(iii[:3])
+        f1.write(' '*10)
+        f1.write(iii[3:])
+        f1.write(' '*30)
+        
+        ii=i[:6]
+        iii=ii.split('%')[0]
+        f1.write(iii)
+        f1.write('\n')
+    f1.close()
